@@ -14,15 +14,13 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
+VIOLET = (255, 0, 255)
 
 # Размер препятствия
 OBSTACLES_RADIUS = 5
 
 # Радиус доступности
-ACCESSIBILITY_RADIUS = 30
+ACCESSIBILITY_RADIUS = 50
 
 # Массив точек пути
 nodes = np.array([], dtype=int)
-
-
-
