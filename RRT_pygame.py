@@ -57,7 +57,7 @@ while running:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     flCalculations = True
-                    nodes = RRT.step(position, screen, nodes)
+                    nodes = RRT.step(x, y, screen, nodes)
                     flCalculations = False
 
 
