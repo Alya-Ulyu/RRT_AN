@@ -2,7 +2,7 @@ import pygame
 from RRT_config import *
 import RRT
 
-cr, cl, x, y, x1, y1 = [0] * 6
+cr, cl, x, y, x_end, y_end = [0] * 6
 
 # Создаем окно
 pygame.init()
@@ -45,19 +45,23 @@ while running:
                     if cr > 1:
                         pygame.draw.circle(screen, BLACK, (x, y), 10)
                     x, y = position[0], position[1]
+                    nodes = ([x, y])
                     pygame.draw.circle(screen, RED, (position[0], position[1]), 10)
 
                 elif event.button == 3:
                     cl += 1
                     if cl > 1:
-                        pygame.draw.circle(screen, BLACK, (x1, y1), 10)
-                    x1, y1 = position[0], position[1]
+                        pygame.draw.circle(screen, BLACK, (x_end, y_end), 10)
+                    x_end, y_end = position[0], position[1]
                     pygame.draw.circle(screen, GREEN, (position[0], position[1]), 10)
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     flCalculations = True
-                    nodes = RRT.step(x, y, screen, nodes)
+                    for i in range(10000):
+                        nodes, flag = RRT.step(x, y, x_end, y_end, screen, nodes)
+                        if flag:
+                            break
                     flCalculations = False
 
 
