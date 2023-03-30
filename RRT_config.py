@@ -20,7 +20,12 @@ VIOLET = (255, 0, 255)
 OBSTACLES_RADIUS = 5
 
 # Радиус доступности
-ACCESSIBILITY_RADIUS = 50
+ACCESSIBILITY_RADIUS = 30
+ACCESSIBILITY_RADIUS_end = 50
 
-# Массив точек пути
-nodes = np.array([], dtype=int)
+# Массивы точек пути
+nodes = np.array([])
+edges = np.array([])
+
+# Словарь с родительскими нодами:
+edges = {}
