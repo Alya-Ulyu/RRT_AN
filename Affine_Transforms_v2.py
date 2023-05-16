@@ -1,34 +1,36 @@
 import numpy as np
 
 
-def matrix(x=0, y=0):
+def matrix(x=0, y=0, theta=0):
     '''
-    матрица переноса
+    матрица переноса и поворота системы координат
     '''
-    mat_moving = np.array([[1, 0, -x],
-                           [0, 1, -y],
-                           [0, 0, 1]])
-    return mat_moving
+    mat_conv = np.array([[np.cos(theta), -np.sin(theta), x],
+                         [np.sin(theta), np.cos(theta), y],
+                         [0, 0, 1]])
+    return mat_conv
 
 
-camera1 = np.array([3, 2, 1])  # начальное положение робота с камеры
-camera2 = np.array([4, 4, 1])  # конечное положение робота с камеры
-x1, y1 = camera1[:2]
-x2, y2 = camera2[:2]
-theta_1 = np.pi / 6  # начальный угол робота с камеры
-theta_2 = 0  # конечный угол робота с камеры
+# начальное положение робота с камеры
+vector_1 = np.array([3, 2, 1])
+x1, y1 = vector_1[:2]
+theta_1 = np.pi / 6
 
-theta = theta_1 + theta_2
+# конечное положение робота с камеры
+vector_2 = np.array([4, 4, 1])
+x2, y2 = vector_2[:2]
+theta_2 = theta_1 - np.pi / 6  # pi/6 - угол на который повернулся робот (в системе координат робота)
 
-mat_r = np.array([[np.cos(theta), np.sin(theta), 0],
-                  [-np.sin(theta), np.cos(theta), 0],
-                  [0, 0, 1]])
+mat_before = matrix(x1, y1, theta_1)
+mat_after = matrix(x2, y2, theta_2)
 
-mat_do = np.dot(matrix(x1, y1), camera1)
-mat_posle = np.dot(matrix(x2, y2), camera2)
+# перенос и поворот системы координат
+mat = np.dot(np.linalg.inv(mat_before), mat_after)
 
-mat_moving = camera2 - camera1
-mat = np.dot(mat_r, mat_moving)
-
-print(' x: ', mat[0], '\n', 'y: ', mat[1], '\n', 'angle: ', (theta_2 - theta_1) * 180 / np.pi, '\n', 'way: ',
-      np.sqrt(mat[0] ** 2 + mat[1] ** 2))
+print(mat_before)
+print()
+print(mat_after)
+print()
+print(mat)
+print(' x: ', mat[0, 2], '\n', 'y: ', mat[1, 2], '\n', 'angle: ', (theta_2 - theta_1) * 180 / np.pi, '\n', 'way: ',
+      np.sqrt(mat[0, 2] ** 2 + mat[1, 2] ** 2))
